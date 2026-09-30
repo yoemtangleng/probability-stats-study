@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>习题3(2) 维恩图分区法</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root { --bg:#fafaf7; --fg:#222; --muted:#666; --card:#fff; --line:#d8d8d0; --hi:#e8590c; --hifill:rgba(232,89,12,.45); --accent:#1c7ed6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#15161a; --fg:#e6e6e6; --muted:#9a9aa0; --card:#1e2026; --line:#3a3d46; --hi:#ff922b; --hifill:rgba(255,146,43,.5); --accent:#74c0fc; }
+  }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; line-height:1.7; }
+  main { max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  h1 { font-size:1.4rem; margin:.2em 0; }
+  h2 { font-size:1.1rem; margin:1.6em 0 .4em; border-left:4px solid var(--accent); padding-left:.6em; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin:12px 0; }
+  .muted { color:var(--muted); font-size:.92rem; }
+  .row { display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; }
+  svg { max-width:100%; height:auto; background:var(--card); border:1px solid var(--line); border-radius:10px; }
+  .btns { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
+  button { font:inherit; padding:6px 12px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--fg); cursor:pointer; }
+  button.on { border-color:var(--hi); background:var(--hifill); }
+  .result { font-size:1.05rem; }
+  .final { border:2px solid var(--hi); border-radius:8px; padding:6px 12px; display:inline-block; font-weight:600; }
+  table { border-collapse:collapse; width:100%; }
+  td, th { border:1px solid var(--line); padding:6px 10px; text-align:center; }
+  .warn { border-left:4px solid var(--hi); padding-left:10px; }
+  .circ { fill:none; stroke:var(--fg); stroke-width:2; }
+  .lab { font-size:12px; fill:var(--fg); text-anchor:middle; }
+  .name { font-size:16px; font-weight:600; fill:var(--fg); }
+</style>
+</head>
+<body>
+<main>
+<h1>第一章习题 3(2)：维恩图「分区法」</h1>
+<p class="muted">来源：教材第一章习题 3(2)。已知 $P(A)=\tfrac12,\ P(B)=\tfrac13,\ P(C)=\tfrac15,\ P(AB)=\tfrac1{10},\ P(AC)=\tfrac1{15},\ P(BC)=\tfrac1{20},\ P(ABC)=\tfrac1{30}$。</p>
+
+<div class="card warn">
+  <b>核心想法：</b>三个圆把整个样本空间 $S$ 切成互不重叠的 <b>8 块</b>。只要算出每一块的概率，任何一个事件的概率，都是"它包含的那几块加起来"。<br>
+  <span class="muted">（下面的分数都用 60 做分母，方便相加；最后再约分。）</span>
+</div>
+
+<h2>第一步：从最里面往外，把 8 块的概率填出来</h2>
+<div class="card">
+  <p>① 三个圆的公共部分：$P(ABC)=\tfrac1{30}=\tfrac{2}{60}$。</p>
+  <p>② 只在两个圆里的部分 = 两两交 $-$ 三重交：<br>
+    $P(AB\bar C)=P(AB)-P(ABC)=\tfrac{6}{60}-\tfrac{2}{60}=\tfrac{4}{60}$<br>
+    $P(A\bar BC)=P(AC)-P(ABC)=\tfrac{4}{60}-\tfrac{2}{60}=\tfrac{2}{60}$<br>
+    $P(\bar ABC)=P(BC)-P(ABC)=\tfrac{3}{60}-\tfrac{2}{60}=\tfrac{1}{60}$</p>
+  <p>③ 只在一个圆里的部分 = 整个圆 $-$ 它和别的圆重叠的三块：<br>
+    $P(A\bar B\bar C)=\tfrac{30}{60}-\tfrac4{60}-\tfrac2{60}-\tfrac2{60}=\tfrac{22}{60}$<br>
+    $P(\bar AB\bar C)=\tfrac{20}{60}-\tfrac4{60}-\tfrac1{60}-\tfrac2{60}=\tfrac{13}{60}$<br>
+    $P(\bar A\bar BC)=\tfrac{12}{60}-\tfrac2{60}-\tfrac1{60}-\tfrac2{60}=\tfrac{7}{60}$</p>
+  <p>④ 三个圆之外：$P(\bar A\bar B\bar C)=1-\tfrac{2+4+2+1+22+13+7}{60}=1-\tfrac{51}{60}=\tfrac{9}{60}$。</p>
+  <p class="muted">检验：8 块加起来 $=\tfrac{2+4+2+1+22+13+7+9}{60}=\tfrac{60}{60}=1$ ✓，每一块都在 $[0,1]$ 内 ✓。</p>
+</div>
+
+<h2>第二步：点一个事件，看它对应哪几块</h2>
+<div class="row">
+  <svg id="venn" viewBox="0 0 400 320" width="420" role="img" aria-label="三个事件的维恩图"></svg>
+  <div style="flex:1; min-width:260px">
+    <div class="btns" id="btns"></div>
+    <div class="card result" id="out">点上面任意一个事件。</div>
+  </div>
+</div>
+
+<h2>第三步：本题六个答案</h2>
+<div class="card">
+<table>
+  <tr><th>事件</th><th>包含的区块</th><th>概率</th></tr>
+  <tr><td>$A\cup B$</td><td>除 $\bar A\bar B$ 以外的所有</td><td>$\tfrac{11}{15}$</td></tr>
+  <tr><td>$\bar A\bar B$</td><td>只在 $C$ 里 + 圈外</td><td>$\tfrac{4}{15}$</td></tr>
+  <tr><td>$A\cup B\cup C$</td><td>三圆之内（7 块）</td><td>$\tfrac{17}{20}$</td></tr>
+  <tr><td>$\bar A\bar B\bar C$</td><td>圈外（1 块）</td><td>$\tfrac{3}{20}$</td></tr>
+  <tr><td>$\bar A\bar BC$</td><td>只在 $C$ 里（1 块）</td><td>$\tfrac{7}{60}$</td></tr>
+  <tr><td>$\bar A\bar B\cup C$</td><td>整个 $C$ 圆 + 圈外</td><td>$\tfrac{7}{20}$</td></tr>
+</table>
+<p class="muted">用第一组的另一种办法交叉验证：$P(\bar A\bar B\cup C)=P(\bar A\bar B)+P(C)-P(\bar A\bar BC)=\tfrac{16}{60}+\tfrac{12}{60}-\tfrac{7}{60}=\tfrac{21}{60}=\tfrac{7}{20}$ ✓</p>
+</div>
+
+<h2>作业本可抄的整洁版（第 (2) 问）</h2>
+<div class="card">
+<p>解：</p>
+<p>$P(A\cup B)=P(A)+P(B)-P(AB)=\tfrac12+\tfrac13-\tfrac1{10}=\tfrac{11}{15}$</p>
+<p>$P(\bar A\bar B)=P(\overline{A\cup B})=1-\tfrac{11}{15}=\tfrac{4}{15}$</p>
+<p>$P(A\cup B\cup C)=P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)=\tfrac{30+20+12-6-4-3+2}{60}=\tfrac{17}{20}$</p>
+<p>$P(\bar A\bar B\bar C)=P(\overline{A\cup B\cup C})=1-\tfrac{17}{20}=\tfrac{3}{20}$</p>
+<p>$\bar A\bar BC=C-(A\cup B)C=C-(AC\cup BC)$，所以<br>
+$P(\bar A\bar BC)=P(C)-\big[P(AC)+P(BC)-P(ABC)\big]=\tfrac15-\big(\tfrac1{15}+\tfrac1{20}-\tfrac1{30}\big)=\tfrac{12-4-3+2}{60}=\tfrac{7}{60}$</p>
+<p>$P(\bar A\bar B\cup C)=P(\bar A\bar B)+P(C)-P(\bar A\bar BC)=\tfrac{16}{60}+\tfrac{12}{60}-\tfrac{7}{60}=\tfrac{7}{20}$</p>
+<p>答案： <span class="final">$\tfrac{11}{15},\ \tfrac{4}{15},\ \tfrac{17}{20},\ \tfrac{3}{20},\ \tfrac{7}{60},\ \tfrac{7}{20}$</span></p>
+</div>
+</main>
+
+<script>
+// 区块编码：三位 abc，1 表示在该圆内。概率以 1/60 为单位。
+const W = { '111':2, '110':4, '101':2, '011':1, '100':22, '010':13, '001':7, '000':9 };
+const pos = { '100':[105,100], '010':[295,100], '001':[200,280], '110':[200,85], '101':[150,195], '011':[250,195], '111':[200,150], '000':[40,298] };
+const circ = { a:[150,130], b:[250,130], c:[200,215] }, R = 100;
+const ev = [
+  ['A\\cup B',            c=>c[0]==='1'||c[1]==='1'],
+  ['\\bar A\\bar B',      c=>c[0]==='0'&&c[1]==='0'],
+  ['A\\cup B\\cup C',     c=>c!=='000'],
+  ['\\bar A\\bar B\\bar C',c=>c==='000'],
+  ['\\bar A\\bar BC',     c=>c==='001'],
+  ['\\bar A\\bar B\\cup C',c=>(c[0]==='0'&&c[1]==='0')||c[2]==='1'],
+];
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('venn');
+const el = (n,a,p)=>{ const e=document.createElementNS(NS,n); for(const k in a) e.setAttribute(k,a[k]); (p||svg).appendChild(e); return e; };
+const defs = el('defs',{});
+['a','b','c'].forEach(k=>{
+  const cp = el('clipPath',{id:'cl'+k},defs); el('circle',{cx:circ[k][0],cy:circ[k][1],r:R},cp);
+});
+const regionEls = {};
+Object.keys(W).forEach(code=>{
+  const m = el('mask',{id:'mk'+code},defs);
+  el('rect',{x:0,y:0,width:400,height:320,fill:'#fff'},m);
+  ['a','b','c'].forEach((k,i)=>{ if(code[i]==='0') el('circle',{cx:circ[k][0],cy:circ[k][1],r:R,fill:'#000'},m); });
+  let parent = svg;
+  ['a','b','c'].forEach((k,i)=>{ if(code[i]==='1') parent = el('g',{'clip-path':`url(#cl${k})`},parent); });
+  regionEls[code] = el('rect',{x:0,y:0,width:400,height:320,mask:`url(#mk${code})`,fill:'var(--hifill)',opacity:0},parent);
+});
+['a','b','c'].forEach(k=>el('circle',{cx:circ[k][0],cy:circ[k][1],r:R,class:'circ'}));
+[['A',60,40],['B',340,40],['C',200,316]].forEach(([t,x,y])=>{ const e=el('text',{x,y,class:'name','text-anchor':'middle'}); e.textContent=t; });
+Object.keys(W).forEach(code=>{
+  const [x,y]=pos[code]; const e=el('text',{x,y,class:'lab'}); e.textContent = W[code]+'/60';
+});
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const frac=n=>{ const g=gcd(n,60); return g===60?'1':(n/g)+'/'+(60/g); };
+const btns = document.getElementById('btns'), out = document.getElementById('out');
+ev.forEach(([tex,f],i)=>{
+  const b = document.createElement('button'); b.innerHTML='$'+tex+'$'; btns.appendChild(b);
+  b.onclick = ()=>{
+    [...btns.children].forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    let sum=0, parts=[];
+    Object.keys(W).forEach(code=>{ const on=f(code); regionEls[code].setAttribute('opacity',on?1:0); if(on){ sum+=W[code]; parts.push(W[code]); } });
+    out.innerHTML = `$P(${tex})=\\dfrac{${parts.join('+')}}{60}${gcd(sum,60)===1?'':'=\\dfrac{'+sum+'}{60}'}=\\boxed{${frac(sum).includes('/')?'\\dfrac{'+frac(sum).split('/')[0]+'}{'+frac(sum).split('/')[1]+'}':'1'}}$`;
+    renderMathInElement(out,{delimiters:[{left:'$',right:'$',display:false}]});
+  };
+});
+window.addEventListener('load',()=>renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]}));
+</script>
+</body>
+</html>
