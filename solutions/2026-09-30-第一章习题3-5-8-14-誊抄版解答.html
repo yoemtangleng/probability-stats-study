@@ -54,7 +54,15 @@
 <p class="note">检验：所有值在 $[0,1]$ 内；$\bar A\bar B\bar C$ 与 $A\cup B\cup C$ 互为对立，$\tfrac3{20}+\tfrac{17}{20}=1$ ✓；最后一问用对立事件法交叉验证，$1-P\big((A\cup B)\bar C\big)=1-\big[\tfrac{11}{15}-\big(\tfrac1{15}+\tfrac1{20}-\tfrac1{30}\big)\big]=\tfrac7{20}$ ✓。详细的维恩图分区法见 <code>2026-09-30-习题3(2)-维恩图分区法.html</code>。</p>
 
 <h2>第 3 题 (3)</h2>
-<div class="todo">待完成（本次 session 未做）。</div>
+<p class="q">已知 $P(A)=\tfrac12$，(i) 若 $A,B$ 互不相容，求 $P(A\bar B)$；(ii) 若 $P(AB)=\tfrac18$，求 $P(A\bar B)$。</p>
+<div class="card">
+<p>解：$A=AB\cup A\bar B$，且 $AB$ 与 $A\bar B$ 互不相容，所以 $P(A)=P(AB)+P(A\bar B)$，即</p>
+<p>$P(A\bar B)=P(A)-P(AB)$</p>
+<p>(i) $A,B$ 互不相容，即 $AB=\varnothing$，所以 $P(AB)=0$，</p>
+<p>$P(A\bar B)=\tfrac12-0=\tfrac12$　答： <span class="ans">$\tfrac12$</span></p>
+<p>(ii) $P(A\bar B)=\tfrac12-\tfrac18=\tfrac38$　答： <span class="ans">$\tfrac38$</span></p>
+</div>
+<p class="note">检验：(i) 两圆不相交，$A\bar B$ 就是整个 $A$，所以概率等于 $P(A)$ ✓；(ii) $A$ 与 $B$ 有重叠，$A\bar B$ 变小，$\tfrac38<\tfrac12$ ✓。注意“互不相容”（$AB=\varnothing$）与“独立”（$P(AB)=P(A)P(B)$）是不同概念。</p>
 
 <h2>第 5 题</h2>
 <p class="q">10 片药片中有 5 片是安慰剂。(1) 从中任意抽取 5 片，求其中至少有 2 片是安慰剂的概率。(2) 从中每次取一片，作不放回抽样，求前 3 次都取到安慰剂的概率。</p>
