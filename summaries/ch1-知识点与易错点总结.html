@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一章 知识点·技巧·易错点</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root{
+    --bg:#fafafa; --card:#ffffff; --ink:#1f2430; --muted:#5c6470;
+    --accent:#2f6fed; --accent-soft:#eaf1ff; --border:#e3e6ec;
+    --bad:#c0392b; --bad-soft:#fdecea; --good:#1e8e5a; --good-soft:#e7f6ee;
+    --warn:#b7791f; --warn-soft:#fff7e6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#15171c; --card:#1d2027; --ink:#e8e9ec; --muted:#9aa1ad;
+      --accent:#6ea1ff; --accent-soft:#20283a; --border:#2b2f38;
+      --bad:#ff8a7a; --bad-soft:#3a2220; --good:#5fd39a; --good-soft:#17302374;
+      --warn:#e8b95a; --warn-soft:#2b230f;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; padding:24px 16px 80px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; line-height:1.75;}
+  .wrap{max-width:800px; margin:0 auto;}
+  h1{font-size:1.5rem; margin:0 0 4px;}
+  .subtitle{color:var(--muted); font-size:0.9rem; margin-bottom:20px;}
+  nav{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 18px; margin-bottom:20px; font-size:0.92rem;}
+  nav a{color:var(--accent); text-decoration:none; margin-right:14px; white-space:nowrap;}
+  section{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 22px; margin-bottom:20px;}
+  h2{font-size:1.15rem; margin:0 0 12px; color:var(--accent);}
+  h3{font-size:1rem; margin:18px 0 6px;}
+  table{width:100%; border-collapse:collapse; margin:10px 0; font-size:0.93rem;}
+  th,td{border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top;}
+  th{background:var(--accent-soft); color:var(--accent);}
+  .scope{background:var(--warn-soft); border-left:4px solid var(--warn); padding:10px 14px; border-radius:0 8px 8px 0; font-size:0.92rem;}
+  .tip{background:var(--accent-soft); border-left:4px solid var(--accent); padding:8px 14px; margin:10px 0; border-radius:0 8px 8px 0; font-size:0.93rem;}
+  .pit{border:1px solid var(--border); border-radius:10px; padding:12px 16px; margin:12px 0;}
+  .pit .t{font-weight:700; margin-bottom:4px;}
+  .pit .bad{background:var(--bad-soft); color:var(--bad); padding:2px 8px; border-radius:6px; display:inline-block; margin:2px 0;}
+  .pit .good{background:var(--good-soft); color:var(--good); padding:2px 8px; border-radius:6px; display:inline-block; margin:2px 0;}
+  .me{display:inline-block; font-size:0.78rem; background:var(--warn-soft); color:var(--warn); border:1px solid var(--warn); border-radius:10px; padding:0 8px; margin-left:6px;}
+  .formula{background:var(--accent-soft); border-radius:8px; padding:6px 14px; margin:8px 0;}
+  details{margin:8px 0; border:1px solid var(--border); border-radius:8px; padding:8px 14px;}
+  summary{cursor:pointer; font-weight:600;}
+  .katex-display{margin:0.5em 0; overflow-x:auto; overflow-y:hidden;}
+  ul,ol{padding-left:22px; margin:6px 0;}
+  li{margin:3px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>第一章 随机事件及其概率 —— 知识点 · 技巧 · 易错点</h1>
+  <div class="subtitle">概率统计A · 教材：浙大版《概率论与数理统计》第五版 · 整理日期 2026-10-01</div>
+
+  <div class="scope">
+    <b>覆盖范围说明</b>：本总结只基于已上传的材料 —— 第1讲（1.1 随机事件与样本空间）+ 第2讲（概率的定义 + 条件概率）+ 你做过的习题与 session 记录。<br>
+    <b>全概率公式、贝叶斯公式、事件的独立性</b>课件还没讲到，本页只在最后一节留出占位，等材料到了再补全。<br>
+    标有 <span class="me">⭐ 我踩过</span> 的是你在作业/练习里真实犯过的错，复习时优先看。
+  </div>
+
+  <nav>
+    <a href="#s1">1 样本空间与事件</a>
+    <a href="#s2">2 事件的关系与运算</a>
+    <a href="#s3">3 概率的定义</a>
+    <a href="#s4">4 条件概率</a>
+    <a href="#s5">5 做题技巧</a>
+    <a href="#s6">6 易错点</a>
+    <a href="#s7">7 公式速查</a>
+    <a href="#s8">8 自测题</a>
+    <a href="#s9">9 待补</a>
+  </nav>
+
+  <!-- ===== 1 ===== -->
+  <section id="s1">
+    <h2>1　随机试验、样本空间、事件</h2>
+    <ul>
+      <li><b>随机试验 E</b>：①可重复 ②结果明确（所有可能结果事先知道）③每次具体出哪个结果事先不确定。</li>
+      <li><b>样本空间 Ω（或 S）</b>：E 的所有可能结果的集合；其中每个元素是<b>基本事件</b>（样本点）ω。</li>
+      <li><b>随机事件</b>：Ω 的子集。含多个样本点的叫复合事件；Ω 是<b>必然事件</b>，∅ 是<b>不可能事件</b>。</li>
+    </ul>
+
+    <h3>样本空间怎么写 —— 三种类型</h3>
+    <table>
+      <tr><th>类型</th><th>写法</th><th>你做过的例子</th></tr>
+      <tr><td>连续量</td><td>区间/区域不等式</td><td>全班平均分 $S=\{x\mid 0\le x\le 100\}$；单位圆内一点 $S=\{(x,y)\mid x^2+y^2<1\}$</td></tr>
+      <tr><td>离散、无上限</td><td>带约束的整数集合</td><td>生产到10件正品为止的总件数 $S=\{n\mid n\ge 10,\ n\in\mathbb Z^+\}$</td></tr>
+      <tr><td>有停止规则的试验</td><td>有限枚举，元素 = <b>完整结果序列</b></td><td>查到连续2件次品或满4件为止：12个序列 $DD, NDD, NNDD, DNDD, NNNN, \dots$</td></tr>
+    </table>
+  </section>
+
+  <!-- ===== 2 ===== -->
+  <section id="s2">
+    <h2>2　事件的关系与运算</h2>
+    <table>
+      <tr><th>语言</th><th>符号</th><th>备注</th></tr>
+      <tr><td>A 发生</td><td>$A$</td><td></td></tr>
+      <tr><td>A 不发生（对立/逆）</td><td>$\bar A$</td><td>$A\cup\bar A=\Omega,\ A\bar A=\varnothing$</td></tr>
+      <tr><td>A、B <b>同时</b>发生</td><td>$AB=A\cap B$</td><td>挨着写 = 交</td></tr>
+      <tr><td>A、B <b>至少一个</b>发生</td><td>$A\cup B$</td><td>也写作 $A+B$</td></tr>
+      <tr><td>A 发生且 B 不发生</td><td>$A\bar B=A-B$</td><td>差</td></tr>
+      <tr><td>A 发生必导致 B 发生</td><td>$A\subset B$</td><td>包含</td></tr>
+      <tr><td>A、B 不可能同时发生</td><td>$AB=\varnothing$</td><td>互不相容（互斥）</td></tr>
+    </table>
+    <div class="formula">
+      运算律：交换律、结合律、分配律 $A(B\cup C)=AB\cup AC$；<br>
+      <b>德摩根</b>：$\overline{A\cup B}=\bar A\bar B$，$\overline{AB}=\bar A\cup\bar B$（推广到 n 个事件同样成立）
+    </div>
+
+    <h3>A、B、C 三个事件的"标准翻译表"（作业高频）</h3>
+    <table>
+      <tr><th>中文</th><th>写法</th></tr>
+      <tr><td>只有 A 发生</td><td>$A\bar B\bar C$</td></tr>
+      <tr><td>A、B 发生，C 不发生</td><td>$AB\bar C$</td></tr>
+      <tr><td>三个都发生</td><td>$ABC$</td></tr>
+      <tr><td>至少一个发生</td><td>$A\cup B\cup C$（补事件：$\bar A\bar B\bar C$ 都不发生）</td></tr>
+      <tr><td>都不发生</td><td>$\bar A\bar B\bar C=\overline{A\cup B\cup C}$</td></tr>
+      <tr><td>恰有一个发生</td><td>$A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$</td></tr>
+      <tr><td>恰有两个发生</td><td>$AB\bar C\cup A\bar BC\cup\bar ABC$</td></tr>
+      <tr><td>至少两个发生</td><td>$AB\cup BC\cup AC$（等价于"恰有两个 ∪ 三个都发生"）</td></tr>
+      <tr><td>不多于两个发生</td><td>$\overline{ABC}$（唯一不满足的是"三个都发生"）</td></tr>
+      <tr><td>不多于一个发生</td><td>$\bar A\bar B\bar C\cup A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$，或 $\bar A\bar B\cup\bar B\bar C\cup\bar A\bar C$（= 至少两个不发生）</td></tr>
+    </table>
+  </section>
+
+  <!-- ===== 3 ===== -->
+  <section id="s3">
+    <h2>3　概率的定义（四种）</h2>
+
+    <h3>① 古典概率</h3>
+    <p>条件：样本空间<b>有限</b>、每个基本事件<b>等可能</b>。</p>
+    <div class="formula">$$P(A)=\frac{k}{n}=\frac{A\text{ 含的基本事件数}}{\Omega\text{ 含的基本事件总数}}$$</div>
+    <p>局限：必须离散、有限、等可能。经典例题：生日问题（30人 ≈ 0.71，40人 ≈ 0.89，50人 ≈ 0.97）、俄罗斯轮盘（先手中弹 2/3，应选后手）、抽签公平性（每人中奖概率都是 $n/m$，与顺序无关）。</p>
+
+    <h3>② 几何概率</h3>
+    <p>条件：样本空间是<b>测度有限的连续区域</b>，落入各处"等可能"（按测度比例）。</p>
+    <div class="formula">$$P(A)=\frac{L(A)}{L(\Omega)}\qquad(L=\text{长度/面积/体积})$$</div>
+    <p>经典例题：约会问题（用平面正方形面积比）、贝特朗悖论（对"随机取弦"有三种定义，得 1/3、1/2、1/4 —— 说明"随机"必须交代清楚怎么随机）。</p>
+
+    <h3>③ 统计概率</h3>
+    <p>频率 $f(A)=m/n$ 在 $n$ 很大时稳定于某个常数，该常数就是 $P(A)$。（德摩根 2048 次、蒲丰 4040 次、皮尔逊 12000 次投硬币，频率都在 0.5 附近。）<b>频率是试验值，概率是理论值，不能画等号。</b></p>
+
+    <h3>④ 公理化定义（柯尔莫哥洛夫，1933）</h3>
+    <ol>
+      <li>非负性：$P(A)\ge 0$</li>
+      <li>规范性：$P(\Omega)=1$（由此 $P(\varnothing)=0$）</li>
+      <li>可列可加性：$A_i$ 两两互不相容 $\Rightarrow P(\bigcup A_i)=\sum P(A_i)$</li>
+    </ol>
+    <p>前三种定义都是公理化定义的特例。</p>
+
+    <h3>常用性质</h3>
+    <div class="formula">
+      $0\le P(A)\le 1$；　$P(\bar A)=1-P(A)$；　互不相容时 $P(A\cup B)=P(A)+P(B)$
+    </div>
+    <div class="tip">
+      下面两条是教材 1.3 节的标准结论，课件笔记里没单列，但习题几乎必用（第2讲作业 3、5、8、14 很可能会碰到）：<br>
+      $P(A\cup B)=P(A)+P(B)-P(AB)$ 　　$P(A-B)=P(A)-P(AB)$ 　　$A\subset B\Rightarrow P(A)\le P(B)$
+    </div>
+  </section>
+
+  <!-- ===== 4 ===== -->
+  <section id="s4">
+    <h2>4　条件概率与乘法公式</h2>
+    <div class="formula">
+      定义：$P(A\mid B)=\dfrac{P(AB)}{P(B)}\quad(P(B)>0)$<br>
+      乘法公式：$P(AB)=P(B)\,P(A\mid B)$<br>
+      链式推广：$P(A_1A_2\cdots A_n)=P(A_1)\,P(A_2\mid A_1)\,P(A_3\mid A_1A_2)\cdots P(A_n\mid A_1\cdots A_{n-1})$
+    </div>
+    <p><b>直觉</b>：$P(AB)$ 在整个 Ω 里算；$P(A\mid B)$ 是把 B 当成新的样本空间（"已知 B 发生"），在 B 里算 A 占多大比例。</p>
+    <p>条件概率本身也满足概率的所有性质：$P(\Omega\mid B)=1$、可加性、$P(\bar A\mid B)=1-P(A\mid B)$。</p>
+
+    <h3>经典例子（第2讲例5 性别问题）—— 同一情境，两种条件，答案不同</h3>
+    <table>
+      <tr><th>条件</th><th>缩小后的样本空间</th><th>答案</th></tr>
+      <tr><td>"两个孩子中<b>至少有一个</b>是男孩" → 另一个是女孩？</td><td>{男男, 男女, 女男}</td><td>$2/3$</td></tr>
+      <tr><td>"<b>老大</b>是男孩" → 老二是女孩？</td><td>{男男, 男女}</td><td>$1/2$</td></tr>
+    </table>
+  </section>
+
+  <!-- ===== 5 ===== -->
+  <section id="s5">
+    <h2>5　做题技巧</h2>
+
+    <h3>A. 事件表示题</h3>
+    <ol>
+      <li><b>先翻译关键词</b>：同时/都 → 交；至少一个 → 并；不发生 → 补；恰好 k 个 → 把"哪 k 个发生、其余不发生"所有组合列出再并起来。</li>
+      <li><b>"至少 / 不多于"优先想补事件</b>：不多于2个 = 非（三个都发生）；至少一个 = 非（都不发生）；不多于1个 = 至少两个<u>不</u>发生。</li>
+      <li><b>八格检验法（防漏项）</b>：三个事件共 $2^3=8$ 种"发生/不发生"组合。写完答案后，把 8 种组合逐个代进去看"该不该被你的式子覆盖"，边界（全发生、全不发生）最容易漏。</li>
+      <li>简洁写法和展开写法要会互相转化：$AB\cup BC\cup AC$ 能自动覆盖 $ABC$，因为 $ABC\subset AB$。</li>
+    </ol>
+
+    <h3>B. 样本空间题</h3>
+    <ol>
+      <li>先问：取值是<b>连续</b>还是<b>离散</b>？有没有<b>下限</b>？有没有<b>上限</b>？</li>
+      <li>多个约束时，<b>先分别写成一句话</b>（如"下限 10；无上限；整数"），再合并成一个集合，防止顾此失彼。</li>
+      <li>有停止规则的 → <b>画决策树</b>，每个叶子就是一个完整序列；写完用停止规则逐个检查是否合法（例如 DNN 在那里不会停，不能算结果）。</li>
+      <li>区域题：<b>边界用等号，内部用不等号</b>，写完先代一个点检验。</li>
+    </ol>
+
+    <h3>C. 古典概率题</h3>
+    <ol>
+      <li><b>第一步永远是：样本点是什么？是否等可能？</b> 骰子/硬币/球要<b>当成可区分</b>的来列（两颗骰子点数和=7：区分骰子 6/36 = 1/6；只看"和值"11种结果并不等可能，不能直接 1/11）。</li>
+      <li><b>分子分母同口径</b>：分母用有序（排列），分子也必须有序；分母用组合，分子也用组合。<br>
+        例：5 件含 2 件次品，任取 2 件，恰有 1 件次品。
+        组合：$\dfrac{C_2^1C_3^1}{C_5^2}=\dfrac{6}{10}=\dfrac35$；有序：$\dfrac{2\cdot3\cdot2}{5\cdot4}=\dfrac{12}{20}=\dfrac35$，两种口径结果一致。</li>
+      <li><b>"至少有一个…" → 用补事件</b>：$P=1-P(\text{一个都没有})$。生日问题就是这样：
+        $$P(\text{至少两人同生日})=1-\frac{365\cdot364\cdots(365-n+1)}{365^n}$$</li>
+      <li><b>枚举小表</b>：样本点少时（如俄罗斯轮盘 6 种情况）直接列表数，比套公式更不容易错。</li>
+      <li>抽签/抓阄类：与顺序无关，$P_i=\dfrac{C_{m-1}^{n-1}}{C_m^n}=\dfrac nm$。</li>
+    </ol>
+
+    <h3>D. 几何概率题</h3>
+    <ol>
+      <li><b>设变量 → 画样本空间 → 画事件区域 → 面积比</b>。两个随机量就画平面正方形/矩形。</li>
+      <li>事件区域形状复杂时，<b>先画"不会发生"的区域，用 1 − 面积比</b>。<br>
+        例（约会问题，10:00–10:30 内到达，甲等 20 分钟、乙等 15 分钟）：设甲、乙到达时刻 $x,y$（分钟），Ω 是 $30\times30$ 的正方形（面积 900）。碰不上 = ［乙晚到超过 20 分钟：$y-x>20$，三角形面积 $\tfrac12\cdot10\cdot10=50$］∪［甲晚到超过 15 分钟：$x-y>15$，三角形面积 $\tfrac12\cdot15\cdot15=112.5$］，故
+        $$P(\text{碰面})=1-\frac{50+112.5}{900}=\frac{59}{72}\approx0.82$$
+        （数值可用 $[0,1]$ 内合理性检验：结果在 0 到 1 之间 ✓；等待时间都较长，碰面概率高 ✓）</li>
+      <li>先交代"怎么随机"（贝特朗悖论的教训）：题目没说清时，要写明所取的随机模型。</li>
+    </ol>
+
+    <h3>E. 条件概率题</h3>
+    <ol>
+      <li><b>读关键词定方向</b>："已知 / 在……条件下 / 若 / given" 后面的是<b>条件 B</b>，写在竖线右边；求的是 $P(\cdot\mid B)$。没有这些词、说"同时"的，是 $P(AB)$。</li>
+      <li><b>缩小样本空间法</b>（古典概型最稳）：不套公式，直接把"已知条件"下剩下的样本点列出来，数 A 占几个。性别问题就是这样做的。</li>
+      <li><b>连续取球/抽样 → 链式乘法公式</b>，一定先分清<b>放回</b>还是<b>不放回</b>：
+        不放回时每一步的条件概率分母会变；放回时各次独立，条件概率不变。<br>
+        例（1 红 9 白）：不放回，第一次抽到白球后，盒中剩 1 红 8 白，所以 $P(\text{第二次红}\mid\text{第一次白})=\dfrac19$；放回则仍为 $\dfrac1{10}$。</li>
+      <li><b>"几次以内成功"类 → 补事件 + 乘法公式</b>。密码最后一位忘记，试 3 次以内试对：
+        $$1-\frac{9}{10}\cdot\frac89\cdot\frac78=1-\frac{7}{10}=\frac{3}{10}$$
+        若记得是奇数（只有 5 个候选）：$1-\dfrac45\cdot\dfrac34\cdot\dfrac23=\dfrac35$。</li>
+    </ol>
+
+    <h3>F. 交卷前通用检验</h3>
+    <ul>
+      <li>概率是否在 $[0,1]$？互补事件概率之和是否为 1？</li>
+      <li>能不能换一种方法再算一遍（补事件法 / 缩小样本空间 / 极端值代入）？</li>
+      <li>条件概率：竖线左右有没有写反？</li>
+    </ul>
+  </section>
+
+  <!-- ===== 6 ===== -->
+  <section id="s6">
+    <h2>6　易错点清单</h2>
+
+    <h3>6.1　事件与样本空间</h3>
+
+    <div class="pit">
+      <div class="t">并集 ∪ 与交集（同时发生）混用 <span class="me">⭐ 我踩过</span></div>
+      <span class="bad">❌ "A 发生，B、C 不发生" 写成 $A\cup\bar B\cup\bar C$</span><br>
+      <span class="good">✅ $A\bar B\bar C$</span><br>
+      "同时满足 3 个条件" 是交；并集是"满足其中至少一个"。
+    </div>
+
+    <div class="pit">
+      <div class="t">"至少 k 个 / 不多于 k 个" 漏掉边界情况 <span class="me">⭐ 我踩过 ×2</span></div>
+      <span class="bad">❌ "至少两个发生" 只写成恰有两个：$A\bar BC\cup\bar ABC\cup AB\bar C$（漏了 $ABC$）</span><br>
+      <span class="bad">❌ "不多于一个发生" 只写恰有一个（漏了"都不发生"）</span><br>
+      <span class="good">✅ 至少两个 = 恰两个 ∪ 三个都发生；不多于一个 = 都不发生 ∪ 恰有一个</span><br>
+      用"八格检验法"逐种核对。<b>这个坑后面还会换马甲出现</b>（二项分布、几何分布里的"至少"类概率）。
+    </div>
+
+    <div class="pit">
+      <div class="t">补运算的作用范围 <span class="me">⭐ 我踩过</span></div>
+      <span class="bad">❌ 把 $\overline{ABC}$（整体取补）和 $\bar A\bar B\bar C$（各自取补）当成一回事</span><br>
+      <span class="good">✅ $\overline{ABC}=\bar A\cup\bar B\cup\bar C$（不多于两个发生）；$\bar A\bar B\bar C=\overline{A\cup B\cup C}$（都不发生）</span><br>
+      口诀：<b>补号盖住谁，就对谁整体取补；拆开补号时 ∪ 与 ∩ 互换</b>（德摩根）。
+    </div>
+
+    <div class="pit">
+      <div class="t">AB 的含义 <span class="me">⭐ 我踩过</span></div>
+      <span class="bad">❌ 把 $AB$ 理解成"三个事件同时发生"</span><br>
+      <span class="good">✅ $AB$ = "A 和 B 都发生，<b>不管 C</b>"；$ABC\subset AB$</span>
+    </div>
+
+    <div class="pit">
+      <div class="t">样本空间：有界/无界、下限、连续/离散 <span class="me">⭐ 我踩过</span></div>
+      <span class="bad">❌ "生产到 10 件正品为止的总件数" 写成 $\{0\le x\le10\}$ 或 $\{1,\dots,10\}$（把 10 当上限）</span><br>
+      <span class="good">✅ $\{n\mid n\ge10,\ n\in\mathbb Z^+\}$：<b>下限是 10，没有上限</b></span><br>
+      <span class="bad">❌ "全班平均分" 写成整数集合 $\{0,1,\dots,100\}$（平均分不一定是整数，是连续区间）</span><br>
+      一次只抓住一个条件是主要失误模式 → 先把每个约束分别写成一句话，再合并。
+    </div>
+
+    <div class="pit">
+      <div class="t">有停止规则的试验：序列要记完整 <span class="me">⭐ 我踩过</span></div>
+      <span class="bad">❌ 只记"停在第几件"，或把不会停在那里的序列（如 DNN）也列为结果</span><br>
+      <span class="good">✅ 画决策树，列完整序列，每个都用停止规则验证一遍</span>
+    </div>
+
+    <div class="pit">
+      <div class="t">圆周 vs 圆内；点不能和数字比大小 <span class="me">⭐ 我踩过</span></div>
+      <span class="bad">❌ 圆内一点写成 $x^2+y^2=1$（那是圆周）；或写 $(x,y)<1$</span><br>
+      <span class="good">✅ 圆周：$x^2+y^2=1$；单位圆内：$x^2+y^2<1$（"单位" = 半径 1）</span>
+    </div>
+
+    <h3>6.2　概率的计算</h3>
+
+    <div class="pit">
+      <div class="t">没确认"等可能"就套古典概率</div>
+      <span class="bad">❌ 两颗骰子点数和为 7：把和值 2~12 共 11 种当等可能，得 1/11</span><br>
+      <span class="good">✅ 区分两颗骰子，36 种等可能，和为 7 有 6 种：$6/36=1/6$</span>
+    </div>
+
+    <div class="pit">
+      <div class="t">分子分母口径不一致</div>
+      <span class="bad">❌ 分母按组合 $C_n^k$，分子却按有序排列去数</span><br>
+      <span class="good">✅ 同时有序，或同时无序</span>
+    </div>
+
+    <div class="pit">
+      <div class="t">频率 ≠ 概率</div>
+      试验 1000 次得到的频率只是概率的估计值；概率是稳定的理论常数。
+    </div>
+
+    <div class="pit">
+      <div class="t">$P(A)=0$ 不等于 $A=\varnothing$（为后面的连续型变量埋伏笔）</div>
+      $P(\varnothing)=0$ 对，但反过来不对：几何概率里"随机点恰好落在某一个点"的概率是 0，事件却并不是不可能事件。以后"$P(X=x)=0$"就是这个道理，<b>密度值 $f(x)$ 也不是概率</b>。
+    </div>
+
+    <div class="pit">
+      <div class="t">"随机"没交代清楚（贝特朗悖论）</div>
+      同一道"圆内随机取弦"题，按"随机取端点 / 随机取半径上一点 / 随机取中点"三种方式，答案分别是 1/3、1/2、1/4。做几何概率题要明确随机模型。
+    </div>
+
+    <h3>6.3　条件概率</h3>
+
+    <div class="pit">
+      <div class="t">$P(A\mid B)$ 与 $P(AB)$ 混淆</div>
+      $P(AB)$：整个 Ω 里"A、B 同时发生"的概率，分母是全部；
+      $P(A\mid B)=P(AB)/P(B)$：<b>已知 B 发生</b>后 A 的概率，分母缩到 B。同一题里 $P(A\mid B)\ge P(AB)$ 总成立。
+    </div>
+
+    <div class="pit">
+      <div class="t">$P(A\mid B)$ 与 $P(B\mid A)$ 写反</div>
+      一般 $P(A\mid B)\ne P(B\mid A)$。竖线右边永远是"已知发生"的那个事件。
+    </div>
+
+    <div class="pit">
+      <div class="t">对"条件"取补，不能用 1 −</div>
+      <span class="good">✅ $P(\bar A\mid B)=1-P(A\mid B)$（竖线左边取补，右边的条件不变）</span><br>
+      <span class="bad">❌ $P(A\mid\bar B)=1-P(A\mid B)$（一般不成立，条件换了，样本空间都换了）</span>
+    </div>
+
+    <div class="pit">
+      <div class="t">"至少一个" 和 "指定的那个" 不是同一个条件</div>
+      "至少有一个男孩"→ 另一个女孩：2/3；"老大是男孩"→ 老二女孩：1/2。先把条件变成<b>具体列出的样本点集合</b>再算。
+    </div>
+
+    <div class="pit">
+      <div class="t">放回 / 不放回忘了区分</div>
+      不放回时，条件概率的分母和分子随前一步结果变化；写乘法公式时每一项都要重新数"剩下多少"。
+    </div>
+
+    <div class="pit">
+      <div class="t">乘法公式用错顺序</div>
+      $P(AB)=P(A)P(B\mid A)=P(B)P(A\mid B)$ 两种分解都对，<b>选条件容易写出来的那个</b>。要避免写成 $P(A)P(B)$（那是独立才成立）。
+    </div>
+  </section>
+
+  <!-- ===== 7 ===== -->
+  <section id="s7">
+    <h2>7　公式速查卡</h2>
+    <table>
+      <tr><th>名称</th><th>公式</th></tr>
+      <tr><td>德摩根</td><td>$\overline{\bigcup A_i}=\bigcap\bar A_i$，$\overline{\bigcap A_i}=\bigcup\bar A_i$</td></tr>
+      <tr><td>古典概率</td><td>$P(A)=k/n$（有限、等可能）</td></tr>
+      <tr><td>几何概率</td><td>$P(A)=L(A)/L(\Omega)$</td></tr>
+      <tr><td>统计概率</td><td>$P(A)=\lim\limits_{n\to\infty}f(A),\ f(A)=m/n$</td></tr>
+      <tr><td>公理</td><td>$P(A)\ge0,\ P(\Omega)=1,\ P(\varnothing)=0$，可列可加</td></tr>
+      <tr><td>对立事件</td><td>$P(\bar A)=1-P(A)$</td></tr>
+      <tr><td>加法公式*</td><td>$P(A\cup B)=P(A)+P(B)-P(AB)$</td></tr>
+      <tr><td>差事件*</td><td>$P(A-B)=P(A)-P(AB)$</td></tr>
+      <tr><td>条件概率</td><td>$P(A\mid B)=P(AB)/P(B),\ P(B)>0$</td></tr>
+      <tr><td>乘法公式</td><td>$P(AB)=P(B)P(A\mid B)$；链式 $P(A_1\cdots A_n)=P(A_1)P(A_2\mid A_1)\cdots P(A_n\mid A_1\cdots A_{n-1})$</td></tr>
+      <tr><td>条件概率的补</td><td>$P(\bar A\mid B)=1-P(A\mid B)$</td></tr>
+      <tr><td>抽签</td><td>$P_i=C_{m-1}^{n-1}/C_m^n=n/m$（与顺序无关）</td></tr>
+    </table>
+    <p style="font-size:0.85rem;color:var(--muted)">* 教材标准结论，课件笔记未单列。</p>
+  </section>
+
+  <!-- ===== 8 ===== -->
+  <section id="s8">
+    <h2>8　自测题（点开看答案）</h2>
+
+    <p><b>Q1.</b> 用 A,B,C 表示"恰有两个发生"和"不多于一个发生"，各写出一种。</p>
+    <details><summary>答案</summary>
+      恰有两个：$AB\bar C\cup A\bar BC\cup\bar ABC$；不多于一个：$\bar A\bar B\cup\bar B\bar C\cup\bar A\bar C$（也可写成"都不发生 ∪ 恰有一个"4 项）。
+    </details>
+
+    <p><b>Q2.</b> 袋中有 3 红 2 白，不放回连取两球。求 $P(\text{第二个红}\mid\text{第一个红})$ 和 $P(\text{两个都红})$。</p>
+    <details><summary>答案</summary>
+      第一个红后剩 2 红 2 白，条件概率 $=2/4=1/2$；乘法公式 $P=\dfrac35\cdot\dfrac12=\dfrac3{10}$。（交叉验证：$C_3^2/C_5^2=3/10$ ✓）
+    </details>
+
+    <p><b>Q3.</b> 3 个人中至少两人同一天生日的概率（一年按 365 天）？</p>
+    <details><summary>答案</summary>
+      $1-\dfrac{365\cdot364\cdot363}{365^3}\approx 0.0082$。
+    </details>
+
+    <p><b>Q4.</b> 一对夫妇有两个孩子，已知"至少有一个男孩"，求两个都是男孩的概率。已知"老大是男孩"呢？</p>
+    <details><summary>答案</summary>
+      前者缩小样本空间为 {男男, 男女, 女男}，答案 $1/3$；后者 {男男, 男女}，答案 $1/2$。
+    </details>
+
+    <p><b>Q5.</b> 在 $[0,1]$ 内随机取两个数 $x,y$，求 $x+y<\tfrac12$ 的概率。</p>
+    <details><summary>答案</summary>
+      Ω 是单位正方形（面积 1），事件区域是直角边 $\tfrac12$ 的三角形，面积 $\tfrac12\cdot\tfrac12\cdot\tfrac12=\tfrac18$，所以概率 $=\dfrac18$。
+    </details>
+
+    <p><b>Q6.</b> 判断对错并说明：(a) $P(A\mid\bar B)=1-P(A\mid B)$；(b) $P(\bar A\mid B)=1-P(A\mid B)$；(c) $P(A)=0\Rightarrow A=\varnothing$。</p>
+    <details><summary>答案</summary>
+      (a) 错，条件不同；(b) 对；(c) 错，几何概率里单点事件概率为 0 但不是不可能事件。
+    </details>
+  </section>
+
+  <!-- ===== 9 ===== -->
+  <section id="s9">
+    <h2>9　尚未覆盖（等材料到了再补）</h2>
+    <p>以下内容属于第一章，但课件还没讲，<b>这里不展开</b>，以免抢跑：</p>
+    <ul>
+      <li>全概率公式（划分事件、容易漏项）</li>
+      <li>贝叶斯公式（由果推因，分子分母方向）</li>
+      <li>事件的独立性（<b>独立 ≠ 互斥</b>，两者是完全不同的概念）</li>
+    </ul>
+    <p>材料到后，我会把这三块的知识点、技巧和易错点补进本页。</p>
+  </section>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ]
+    });
+  });
+</script>
+</body>
+</html>
