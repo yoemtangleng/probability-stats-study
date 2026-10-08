@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一章习题 19、22、27、32、34 解答</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+  :root { --bg:#fafaf7; --fg:#222; --muted:#666; --card:#fff; --line:#d8d8d0; --hi:#e8590c; --note:#1c7ed6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#15161a; --fg:#e6e6e6; --muted:#9a9aa0; --card:#1e2026; --line:#3a3d46; --hi:#ff922b; --note:#74c0fc; }
+  }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; line-height:1.85; }
+  main { max-width:820px; margin:0 auto; padding:20px 16px 60px; }
+  h1 { font-size:1.4rem; }
+  h2 { font-size:1.15rem; margin:1.8em 0 .3em; border-left:4px solid var(--note); padding-left:.6em; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 16px; margin:10px 0; }
+  .q { color:var(--muted); font-size:.95rem; }
+  .ans { border:2px solid var(--hi); border-radius:8px; padding:4px 12px; display:inline-block; font-weight:600; }
+  .note { color:var(--muted); font-size:.92rem; border-left:3px solid var(--note); padding-left:10px; margin:6px 0; }
+</style>
+</head>
+<body>
+<main>
+<h1>第一章习题 19、22、27、32、34　誊抄版解答</h1>
+<p class="q">教材：《概率论与数理统计》第五版（浙大）第一章习题，教材第 26–28 页。日期：2026-10-08。每题给出作业本可直接誊抄的写法，最终答案加框。</p>
+
+<h2>第 19 题 (1)</h2>
+<p class="q">甲袋中装有 $n$ 只白球、$m$ 只红球，乙袋中装有 $N$ 只白球、$M$ 只红球。今从甲袋中任意取一只球放入乙袋中，再从乙袋中任意取一只球。问取到白球的概率是多少？</p>
+<div class="card">
+<p>解：设 $A=$“从甲袋取出的是白球”，$B=$“最后从乙袋取到白球”。$A,\bar A$ 构成样本空间的一个划分，由全概率公式</p>
+<p>$P(B)=P(A)P(B|A)+P(\bar A)P(B|\bar A)$</p>
+<p>其中 $P(A)=\dfrac{n}{n+m}$，$P(\bar A)=\dfrac{m}{n+m}$。</p>
+<p>若甲袋取出白球，乙袋变为 $N+1$ 只白球、$M$ 只红球，共 $N+M+1$ 只，$P(B|A)=\dfrac{N+1}{N+M+1}$；</p>
+<p>若甲袋取出红球，乙袋变为 $N$ 只白球、$M+1$ 只红球，共 $N+M+1$ 只，$P(B|\bar A)=\dfrac{N}{N+M+1}$。</p>
+<p>所以 $P(B)=\dfrac{n}{n+m}\cdot\dfrac{N+1}{N+M+1}+\dfrac{m}{n+m}\cdot\dfrac{N}{N+M+1}=\dfrac{n(N+1)+mN}{(n+m)(N+M+1)}$</p>
+<p>答： <span class="ans">$\dfrac{n(N+1)+mN}{(n+m)(N+M+1)}$</span></p>
+</div>
+<p class="note">检验：取 $n=m$（甲袋白红各半）时，$P(B)=\dfrac{N+\frac12}{N+M+1}$，介于 $\dfrac{N}{N+M+1}$ 与 $\dfrac{N+1}{N+M+1}$ 之间 ✓。</p>
+
+<h2>第 19 题 (2)</h2>
+<p class="q">第一只盒子装有 5 只红球、4 只白球，第二只盒子装有 4 只红球、5 只白球。先从第一盒中任取 2 只球放入第二盒中去，然后从第二盒中任取一只球，求取到白球的概率。</p>
+<div class="card">
+<p>解：设 $A_i=$“从第一盒取出的 2 只球中恰有 $i$ 只白球”，$i=0,1,2$，它们构成一个划分。设 $B=$“最后从第二盒取到白球”。</p>
+<p>$P(A_0)=\dfrac{C_5^2}{C_9^2}=\dfrac{10}{36},\quad P(A_1)=\dfrac{C_4^1C_5^1}{C_9^2}=\dfrac{20}{36},\quad P(A_2)=\dfrac{C_4^2}{C_9^2}=\dfrac{6}{36}$</p>
+<p>放入 2 球后第二盒共 $9+2=11$ 只球，其中白球 $5+i$ 只，所以 $P(B|A_i)=\dfrac{5+i}{11}$，即 $\dfrac5{11},\ \dfrac6{11},\ \dfrac7{11}$。</p>
+<p>由全概率公式</p>
+<p>$P(B)=\sum_{i=0}^{2}P(A_i)P(B|A_i)=\dfrac{10}{36}\cdot\dfrac5{11}+\dfrac{20}{36}\cdot\dfrac6{11}+\dfrac{6}{36}\cdot\dfrac7{11}=\dfrac{50+120+42}{396}=\dfrac{212}{396}=\dfrac{53}{99}$</p>
+<p>答： <span class="ans">$\dfrac{53}{99}$</span></p>
+</div>
+<p class="note">检验：$P(A_0)+P(A_1)+P(A_2)=\tfrac{36}{36}=1$ ✓。交叉验证：从第一盒取出的 2 球平均含白球 $2\times\tfrac49=\tfrac89$ 只，第二盒白球期望数 $5+\tfrac89=\tfrac{53}{9}$，除以 11 得 $\tfrac{53}{99}$ ✓（与全概率公式结果一致）。</p>
+
+<h2>第 22 题</h2>
+<p class="q">一学生接连参加同一课程的两次考试。第一次及格的概率为 $p$，若第一次及格则第二次及格的概率也为 $p$；若第一次不及格则第二次及格的概率为 $p/2$。(1) 若至少有一次及格则他能取得某种资格，求他能取得该资格的概率。(2) 若已知他第二次已经及格，求他第一次及格的概率。</p>
+<div class="card">
+<p>解：设 $A_i=$“第 $i$ 次考试及格”，$i=1,2$。已知</p>
+<p>$P(A_1)=p,\quad P(A_2|A_1)=p,\quad P(A_2|\bar A_1)=\dfrac p2$</p>
+<p>(1) “至少有一次及格”即 $A_1\cup A_2$，用对立事件：$\overline{A_1\cup A_2}=\bar A_1\bar A_2$。</p>
+<p>$P(\bar A_1\bar A_2)=P(\bar A_1)\,P(\bar A_2|\bar A_1)=(1-p)\Big(1-\dfrac p2\Big)$</p>
+<p>$P(A_1\cup A_2)=1-(1-p)\Big(1-\dfrac p2\Big)=1-\Big(1-\dfrac{3p}2+\dfrac{p^2}2\Big)=\dfrac{3p}{2}-\dfrac{p^2}{2}=\dfrac{p(3-p)}2$</p>
+<p>答： <span class="ans">$\dfrac{p(3-p)}{2}$</span></p>
+<p>(2) 所求为 $P(A_1|A_2)$。先用全概率公式求 $P(A_2)$：</p>
+<p>$P(A_2)=P(A_1)P(A_2|A_1)+P(\bar A_1)P(A_2|\bar A_1)=p\cdot p+(1-p)\cdot\dfrac p2=\dfrac{p^2}{2}+\dfrac p2=\dfrac{p(p+1)}2$</p>
+<p>又 $P(A_1A_2)=P(A_1)P(A_2|A_1)=p^2$，所以（贝叶斯公式）</p>
+<p>$P(A_1|A_2)=\dfrac{P(A_1A_2)}{P(A_2)}=\dfrac{p^2}{p(p+1)/2}=\dfrac{2p}{p+1}$</p>
+<p>答： <span class="ans">$\dfrac{2p}{p+1}$</span></p>
+</div>
+<p class="note">检验：取 $p=1$：(1) 得 $1$（第一次必及格）✓，(2) 得 $1$ ✓。取 $p=\tfrac12$：(2) 得 $\tfrac23>p=\tfrac12$，合理——“第二次及格”是好消息，会提高第一次及格的可能性（因为第一次及格的人第二次更容易及格）✓。</p>
+
+<h2>第 27 题</h2>
+<p class="q">设本题涉及的事件均有意义。设 $A,B$ 都是事件。(1) 已知 $P(A)>0$，证明 $P(AB|A)\ge P(AB|A\cup B)$。(2) 若 $P(A|B)=1$，证明 $P(\bar B|\bar A)=1$。(3) 若设 $C$ 也是事件，且有 $P(A|C)\ge P(B|C)$，$P(A|\bar C)\ge P(B|\bar C)$，证明 $P(A)\ge P(B)$。</p>
+<div class="card">
+<p>(1) 证：因为 $AB\subset A$，所以 $A\cdot AB=AB$；又 $AB\subset A\cup B$，所以 $AB\cdot(A\cup B)=AB$。由条件概率定义</p>
+<p>$P(AB|A)=\dfrac{P(AB)}{P(A)},\qquad P(AB|A\cup B)=\dfrac{P(AB)}{P(A\cup B)}$</p>
+<p>因为 $A\subset A\cup B$，所以 $0<P(A)\le P(A\cup B)$，故 $\dfrac1{P(A)}\ge\dfrac1{P(A\cup B)}$，又 $P(AB)\ge0$，因此</p>
+<p>$P(AB|A)=\dfrac{P(AB)}{P(A)}\ \ge\ \dfrac{P(AB)}{P(A\cup B)}=P(AB|A\cup B)$。证毕。</p>
+<hr style="border:0;border-top:1px dashed var(--line)">
+<p>(2) 证：由 $P(A|B)=1$，即 $\dfrac{P(AB)}{P(B)}=1$，得 $P(AB)=P(B)$。于是</p>
+<p>$P(\bar AB)=P(B)-P(AB)=0$。</p>
+<p>而 $\bar A=\bar AB\cup\bar A\bar B$（互不相容），所以</p>
+<p>$P(\bar A\bar B)=P(\bar A)-P(\bar AB)=P(\bar A)$。</p>
+<p>因此 $P(\bar B|\bar A)=\dfrac{P(\bar A\bar B)}{P(\bar A)}=\dfrac{P(\bar A)}{P(\bar A)}=1$。证毕。</p>
+<hr style="border:0;border-top:1px dashed var(--line)">
+<p>(3) 证：$C,\bar C$ 构成一个划分，由全概率公式</p>
+<p>$P(A)=P(C)P(A|C)+P(\bar C)P(A|\bar C)$，$\quad P(B)=P(C)P(B|C)+P(\bar C)P(B|\bar C)$</p>
+<p>因为 $P(C)\ge0,\ P(\bar C)\ge0$，且 $P(A|C)\ge P(B|C)$，$P(A|\bar C)\ge P(B|\bar C)$，所以</p>
+<p>$P(A)-P(B)=P(C)\big[P(A|C)-P(B|C)\big]+P(\bar C)\big[P(A|\bar C)-P(B|\bar C)\big]\ \ge\ 0$</p>
+<p>即 $P(A)\ge P(B)$。证毕。</p>
+</div>
+<p class="note">说明：(1) 的直观含义——条件“$A\cup B$ 发生”比条件“$A$ 发生”更宽松（样本空间更大），所以 $AB$ 在其中占的比例更小。(2) 另一种思路：$P(A|B)=1$ 说明 $B\subset A$（差一个零概率事件），取补即 $\bar A\subset\bar B$，所以 $P(\bar B|\bar A)=1$。(3) 的结论可以理解为“分情况比较，每种情况下 $A$ 都不比 $B$ 差，那么总体上也是”。</p>
+
+<h2>第 32 题</h2>
+<p class="q">有一种检验艾滋病毒的检验法，其结果有概率 0.005 误认为假阳性（即不带艾滋病毒者，经此检验法有 0.005 的概率被认为带艾滋病毒者）。今有 140 名不带艾滋病毒的正常人全部接受此种检验，被报道至少有一人带艾滋病毒的概率为多少？</p>
+<div class="card">
+<p>解：设 $A_i=$“第 $i$ 名正常人被误判为阳性”，$i=1,\dots,140$。各人检验相互独立，$P(A_i)=0.005$，$P(\bar A_i)=0.995$。</p>
+<p>“至少有一人被报道带病毒”的对立事件是“140 人全部被判为阴性”$=\bar A_1\bar A_2\cdots\bar A_{140}$，由独立性</p>
+<p>$P(\bar A_1\cdots\bar A_{140})=\prod_{i=1}^{140}P(\bar A_i)=0.995^{140}\approx0.4957$</p>
+<p>所以所求概率</p>
+<p>$P=1-0.995^{140}\approx1-0.4957=0.5043$</p>
+<p>答： <span class="ans">$1-0.995^{140}\approx0.504$</span></p>
+</div>
+<p class="note">检验：$0\le0.5043\le1$ ✓。每人误判概率仅千分之五，但 140 人合起来“至少一人误判”的概率超过一半——小概率事件在多次独立重复中累积起来不可忽略。数值核对：$\ln0.995\approx-0.0050125$，乘 140 得 $-0.7018$，$e^{-0.7018}\approx0.4957$ ✓。</p>
+
+<h2>第 34 题</h2>
+<p class="q">求以下两个系统的可靠性：(1) 4 个独立工作的元件 1,2,3,4，可靠性分别为 $p_1,p_2,p_3,p_4$，按题 34 图 (1) 连接（元件 1 与“元件 2、3 串联后再与元件 4 并联”这一部分串联，称并串联系统）。(2) 5 个独立工作的元件 1,2,3,4,5，可靠性均为 $p$，按题 34 图 (2) 连接（桥式系统）。</p>
+<div class="card">
+<p>解：设 $A_i=$“元件 $i$ 正常工作”，$P(A_i)=p_i$，各元件独立；$R$ 表示系统正常工作的事件。</p>
+<p><b>(1)</b> 系统结构：元件 1 与“[元件 2、3 串联] 并联 [元件 4]”串联。</p>
+<p>$R=A_1\,(A_2A_3\cup A_4)$</p>
+<p>由独立性，$P(A_2A_3)=p_2p_3$，$A_2A_3$ 与 $A_4$ 独立，所以</p>
+<p>$P(A_2A_3\cup A_4)=p_2p_3+p_4-p_2p_3p_4$</p>
+<p>再与元件 1 串联（独立）：</p>
+<p>$P(R)=p_1\,(p_2p_3+p_4-p_2p_3p_4)$</p>
+<p>答： <span class="ans">$p_1\,(p_2p_3+p_4-p_2p_3p_4)$</span></p>
+<hr style="border:0;border-top:1px dashed var(--line)">
+<p><b>(2)</b> 桥式系统：上支路 1→2，下支路 4→5，元件 3 跨接在两条支路的中间节点之间。按元件 3 是否正常，用全概率公式（$A_3,\bar A_3$ 为划分）：</p>
+<p>$P(R)=P(A_3)P(R|A_3)+P(\bar A_3)P(R|\bar A_3)$</p>
+<p>● 元件 3 正常：中间两节点短接，系统变为“[元件 1 并 元件 4] 串联 [元件 2 并 元件 5]”。</p>
+<p>$P(R|A_3)=\big[1-(1-p)^2\big]\big[1-(1-p)^2\big]=(2p-p^2)^2$</p>
+<p>● 元件 3 失效：中间支路断开，系统变为“[1 串 2] 并联 [4 串 5]”。</p>
+<p>$P(R|\bar A_3)=1-(1-p^2)(1-p^2)=2p^2-p^4$</p>
+<p>所以</p>
+<p>$P(R)=p\,(2p-p^2)^2+(1-p)(2p^2-p^4)$</p>
+<p>$=p\,(4p^2-4p^3+p^4)+(2p^2-p^4-2p^3+p^5)$</p>
+<p>$=4p^3-4p^4+p^5+2p^2-2p^3-p^4+p^5$</p>
+<p>$=2p^2+2p^3-5p^4+2p^5$</p>
+<p>答： <span class="ans">$2p^2+2p^3-5p^4+2p^5$</span></p>
+</div>
+<p class="note">检验：(1) 取 $p_i=1$ 得 $1\cdot(1+1-1)=1$；取 $p_1=0$ 得 $0$（串联中有一个必坏，则整体必坏）✓。(2) 取 $p=1$：$2+2-5+2=1$ ✓；取 $p=0$：$0$ ✓；取 $p=\tfrac12$：$\tfrac12+\tfrac14-\tfrac5{16}+\tfrac1{16}=\tfrac12$，与桥式系统的对称性（$p=\tfrac12$ 时可靠性恰为 $\tfrac12$）吻合 ✓。以上已用枚举全部 $2^5$ 种元件状态的程序交叉验证过。</p>
+</main>
+</body>
+</html>
