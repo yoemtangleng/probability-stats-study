@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第二章习题 2、4、6、12、15 誊抄版解答</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+  body{font-family:-apple-system,"PingFang SC","Helvetica Neue",sans-serif;max-width:820px;margin:0 auto;padding:24px 16px;line-height:1.8;color:#222;background:#fff}
+  h1{font-size:1.5rem} h2{font-size:1.2rem;margin-top:2rem;border-bottom:2px solid #ddd;padding-bottom:4px}
+  .src{color:#666;font-size:.9rem}
+  .ans{border:2px solid #c0392b;border-radius:6px;padding:8px 14px;margin:12px 0;font-weight:bold}
+  .why{color:#555;font-size:.92rem;margin:0 0 0 1em}
+  table{border-collapse:collapse;margin:10px 0} td,th{border:1px solid #bbb;padding:4px 12px;text-align:center}
+  .warn{background:#fff7e0;border-left:4px solid #e6a700;padding:6px 12px;margin:12px 0;font-size:.92rem}
+  blockquote{margin:8px 0;padding:4px 12px;border-left:4px solid #bbb;color:#444}
+  @media (prefers-color-scheme: dark){body{background:#1c1c1e;color:#e5e5e5}.src,.why,blockquote{color:#aaa}td,th{border-color:#555}.warn{background:#3a3220}h2{border-color:#555}}
+</style>
+</head>
+<body>
+<h1>第二章习题 2、4、6、12、15 誊抄版解答</h1>
+<p class="src">来源：教材《概率论与数理统计》第五版 习题二（第56–57页）；课件 2.1 最后一页布置。日期：2026-10-09（第4次作业）<br>
+12、15 用到泊松分布 / 泊松近似定理（课件2.1 第15–17页），尚未在对话中系统学过。</p>
+
+<h2>第 2 题</h2>
+<blockquote>(1) 一袋中有 5 只球，编号为 1,2,3,4,5。在袋中同时取 3 只，以 $X$ 表示取出的 3 只球中的最大号码，写出 $X$ 的分布律。<br>
+(2) 将一颗骰子抛掷两次，以 $X$ 表示两次中得到的小的点数，试求 $X$ 的分布律。</blockquote>
+
+<p><b>(1)</b> 从 5 只球里同时取 3 只，基本事件总数 $C_5^3=10$，每种取法等可能（古典概型）。最大号码最小是 3（取 1,2,3），最大是 5，所以 $X$ 的可能取值为 $3,4,5$。</p>
+<p>$\{X=k\}$：最大号码恰为 $k$，即 $k$ 号球必须取到，另外 2 只球从编号比 $k$ 小的 $k-1$ 只里选：</p>
+$$P\{X=k\}=\frac{C_{k-1}^{2}}{C_5^3},\quad k=3,4,5$$
+<p>$k=3$：$\dfrac{C_2^2}{10}=\dfrac1{10}$；$k=4$：$\dfrac{C_3^2}{10}=\dfrac3{10}$；$k=5$：$\dfrac{C_4^2}{10}=\dfrac6{10}=\dfrac35$。</p>
+<table><tr><th>$X$</th><th>3</th><th>4</th><th>5</th></tr><tr><td>$p_k$</td><td>$\tfrac1{10}$</td><td>$\tfrac3{10}$</td><td>$\tfrac35$</td></tr></table>
+<p class="why">检验：$\tfrac1{10}+\tfrac3{10}+\tfrac6{10}=1$ ✓</p>
+
+<p><b>(2)</b> 两次点数 $(i,j)$ 共 $36$ 种等可能结果，$X=\min(i,j)$，取值 $1,\dots,6$。</p>
+<p>$\{X=k\}$：两次点数都 $\ge k$，且至少有一次恰为 $k$。用"都 $\ge k$"减去"都 $\ge k+1$"：</p>
+$$P\{X=k\}=\frac{(7-k)^2-(6-k)^2}{36}=\frac{13-2k}{36},\quad k=1,2,\dots,6$$
+<table><tr><th>$X$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+<tr><td>$p_k$</td><td>$\tfrac{11}{36}$</td><td>$\tfrac9{36}$</td><td>$\tfrac7{36}$</td><td>$\tfrac5{36}$</td><td>$\tfrac3{36}$</td><td>$\tfrac1{36}$</td></tr></table>
+<p class="why">检验：$11+9+7+5+3+1=36$，和为 1 ✓。直觉对照：$k=1$ 时 $(1,1),(1,2),\dots,(1,6),(2,1),\dots,(6,1)$ 共 11 个 ✓</p>
+
+<h2>第 4 题</h2>
+<blockquote>进行重复独立试验，设每次试验成功的概率为 $p$，失败的概率为 $q=1-p\ (0<p<1)$。<br>
+(1) 将试验进行到出现一次成功为止，以 $X$ 表示所需的试验次数，求 $X$ 的分布律。（此时称 $X$ 服从以 $p$ 为参数的几何分布。）<br>
+(2) 将试验进行到出现 $r$ 次成功为止，以 $Y$ 表示所需的试验次数，求 $Y$ 的分布律。（此时称 $Y$ 服从以 $r,p$ 为参数的帕斯卡分布或负二项分布。）<br>
+(3) 一篮球运动员的投篮命中率为 45%，以 $X$ 表示首次投中时累计已投篮的次数，写出 $X$ 的分布律，并计算 $X$ 取偶数的概率。</blockquote>
+
+<p><b>(1)</b> $X=k$ 表示前 $k-1$ 次都失败、第 $k$ 次成功。各次独立，所以</p>
+$$P\{X=k\}=q^{k-1}p,\quad k=1,2,3,\dots$$
+<p class="why">检验：$\sum_{k=1}^{\infty}q^{k-1}p=\dfrac{p}{1-q}=1$ ✓（首项 $p$、公比 $q$ 的等比级数）</p>
+
+<p><b>(2)</b> $Y=k$ 表示第 $k$ 次试验成功（这是第 $r$ 次成功），且前 $k-1$ 次中恰有 $r-1$ 次成功。前 $k-1$ 次是二项分布的情形：</p>
+$$P\{Y=k\}=C_{k-1}^{\,r-1}p^{r-1}q^{(k-1)-(r-1)}\cdot p=C_{k-1}^{\,r-1}\,p^{r}q^{k-r},\quad k=r,r+1,r+2,\dots$$
+<p class="why">为什么 $k\ge r$：至少要试 $r$ 次才可能成功 $r$ 次。$r=1$ 时 $C_{k-1}^0p\,q^{k-1}=q^{k-1}p$，就是 (1) 的几何分布 ✓</p>
+
+<p><b>(3)</b> 这是 (1) 中 $p=0.45$，$q=0.55$ 的情形：</p>
+$$P\{X=k\}=0.55^{\,k-1}\times0.45,\quad k=1,2,3,\dots$$
+<p>$X$ 取偶数，即 $X=2,4,6,\dots$，互不相容，概率相加：</p>
+$$P\{X\text{ 为偶数}\}=\sum_{m=1}^{\infty}q^{2m-1}p=pq\sum_{m=1}^{\infty}(q^{2})^{m-1}=\frac{pq}{1-q^{2}}=\frac{pq}{(1-q)(1+q)}=\frac{q}{1+q}$$
+<p class="why">这里用了 $1-q=p$，约去 $p$。</p>
+$$=\frac{0.55}{1.55}=\frac{11}{31}\approx0.355$$
+<div class="ans">答：(1) $P\{X=k\}=q^{k-1}p,\ k=1,2,\dots$；(2) $P\{Y=k\}=C_{k-1}^{r-1}p^rq^{k-r},\ k=r,r+1,\dots$；(3) $P\{X=k\}=0.55^{k-1}\times0.45$，$P\{X\text{ 为偶数}\}=\dfrac{11}{31}\approx0.355$。</div>
+<p class="why">合理性：首次投中的次数是奇数更容易（第 1 次就中的概率 0.45 就是奇数情形），所以偶数概率 $<0.5$ ✓；且奇数概率 $=\dfrac{p}{1-q^2}=\dfrac{1}{1+q}=\dfrac{20}{31}$，两者之和 $\dfrac{11}{31}+\dfrac{20}{31}=1$ ✓</p>
+
+<h2>第 6 题</h2>
+<blockquote>一大楼装有 5 台同类型的供水设备。设各台设备是否被使用相互独立。调查表明在任一时刻 $t$ 每台设备被使用的概率为 0.1，问在同一时刻<br>
+(1) 恰有 2 台设备被使用的概率是多少？ (2) 至少有 3 台设备被使用的概率是多少？<br>
+(3) 至多有 3 台设备被使用的概率是多少？ (4) 至少有 1 台设备被使用的概率是多少？</blockquote>
+
+<p>设 $X$ 为同一时刻 5 台设备中被使用的台数。每台设备相当于一次独立试验，"被使用"为成功，$p=0.1$，所以 $X\sim B(5,\,0.1)$，$q=0.9$。</p>
+$$P\{X=k\}=C_5^k\,0.1^{k}\,0.9^{5-k},\quad k=0,1,\dots,5$$
+<table><tr><th>$k$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+<tr><td>$P\{X=k\}$</td><td>0.59049</td><td>0.32805</td><td>0.0729</td><td>0.0081</td><td>0.00045</td><td>0.00001</td></tr></table>
+<p class="why">检验：六项之和 $=1$ ✓</p>
+
+<p><b>(1)</b> $P\{X=2\}=C_5^2\,0.1^2\,0.9^3=10\times0.01\times0.729=0.0729$</p>
+<p><b>(2)</b> $P\{X\ge3\}=P\{X=3\}+P\{X=4\}+P\{X=5\}=0.0081+0.00045+0.00001=0.00856$</p>
+<p><b>(3)</b> 用补事件：$P\{X\le3\}=1-P\{X\ge4\}=1-(0.00045+0.00001)=1-0.00046=0.99954$</p>
+<p><b>(4)</b> 用补事件：$P\{X\ge1\}=1-P\{X=0\}=1-0.9^5=1-0.59049=0.40951$</p>
+<div class="ans">答：(1) $0.0729$；(2) $0.00856$；(3) $0.99954$；(4) $0.40951$。</div>
+<p class="why">合理性：每台只有 10% 概率被使用，所以"≥3 台"很小、"≤3 台"接近 1 ✓</p>
+
+<h2>第 12 题</h2>
+<blockquote>一电话总机每分钟收到呼唤的次数服从参数为 4 的泊松分布。求 (1) 某一分钟恰有 8 次呼唤的概率；(2) 某一分钟的呼唤次数大于 3 的概率。</blockquote>
+
+<p>设 $X$ 为某一分钟内收到的呼唤次数，$X\sim\pi(4)$，即 $\lambda=4$：</p>
+$$P\{X=k\}=\frac{\lambda^{k}e^{-\lambda}}{k!}=\frac{4^{k}e^{-4}}{k!},\quad k=0,1,2,\dots$$
+<p><b>(1)</b></p>
+$$P\{X=8\}=\frac{4^{8}e^{-4}}{8!}=\frac{65536}{40320}e^{-4}\approx0.0298$$
+<p><b>(2)</b> "大于 3"的反面是"$0,1,2,3$ 次"，用补事件：</p>
+$$P\{X>3\}=1-\sum_{k=0}^{3}\frac{4^{k}e^{-4}}{k!}=1-e^{-4}\Big(1+4+\frac{16}{2}+\frac{64}{6}\Big)=1-\frac{71}{3}e^{-4}\approx1-0.4335=0.5665$$
+<div class="ans">答：(1) $\dfrac{4^8e^{-4}}{8!}\approx0.0298$；(2) $1-\dfrac{71}{3}e^{-4}\approx0.5665$。</div>
+<p class="why">$e^{-4}\approx0.018316$。合理性：均值是 4，所以"恰好 8 次"很小，而"超过 3 次"略大于一半 ✓（也可对照教材附表泊松分布表查得）</p>
+
+<h2>第 15 题</h2>
+<blockquote>保险公司在一天内承保了 5000 张相同年龄、为期一年的寿险保单，每人一份。在合同有效期内若投保人死亡，则公司需赔付 3 万元。设在一年内，该年龄的死亡率为 0.0015，且各投保人是否死亡相互独立。求该公司对于这批投保人的赔付总额不超过 30 万元的概率（利用泊松定理计算）。</blockquote>
+
+<p>设 $X$ 为这 5000 位投保人中一年内死亡的人数，各人独立、死亡率相同，所以 $X\sim B(5000,\,0.0015)$。</p>
+<p>赔付总额为 $3X$ 万元。"不超过 30 万元"即 $3X\le30$，即 $X\le10$。要求的是 $P\{X\le10\}$。</p>
+<p><b>用泊松定理近似</b>：$n=5000$ 很大，$p=0.0015$ 很小，取 $\lambda=np=5000\times0.0015=7.5$，则 $X$ 近似服从 $\pi(7.5)$：</p>
+$$P\{X\le10\}=\sum_{k=0}^{10}C_{5000}^{k}\,0.0015^{k}\,0.9985^{5000-k}\approx\sum_{k=0}^{10}\frac{7.5^{k}e^{-7.5}}{k!}\approx0.8622$$
+<table><tr><th>$k$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+<tr><td>$\frac{7.5^ke^{-7.5}}{k!}$</td><td>0.00055</td><td>0.00415</td><td>0.01556</td><td>0.03889</td><td>0.07292</td><td>0.10937</td></tr>
+<tr><th>$k$</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th></th></tr>
+<tr><td>$\frac{7.5^ke^{-7.5}}{k!}$</td><td>0.13672</td><td>0.14648</td><td>0.13733</td><td>0.11444</td><td>0.08583</td><td></td></tr></table>
+<div class="ans">答：$P\{X\le10\}\approx0.8622$，即赔付总额不超过 30 万元的概率约为 $0.862$。</div>
+<p class="why">合理性：平均死亡人数 $\lambda=7.5$，赔付上限对应 10 人，比平均多一些，所以概率较大 ✓。直接用二项分布精确计算得 $0.8624$，与近似值 $0.8622$ 非常接近。<br>
+注意：近似的前提是 $n$ 大、$p$ 小（泊松近似定理：$np_n\to\lambda$ 时 $B(n,p_n)\to\pi(\lambda)$）。</p>
+</body>
+</html>
